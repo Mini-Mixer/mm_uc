@@ -20,7 +20,9 @@ void init(void){
 	TCCR2A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
 	TCCR2B = _BV(CS22);
 	OCR2B = 255; 
+	OCR2A = 255; 
 	DDRD |= 1<<PD3; // OC2B
+	DDRD |= 1<<PB3; // OC2B
 }
 
 request* processRequest(){
