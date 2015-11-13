@@ -1,4 +1,4 @@
-#define DELTA 10
+#define DELTA 1000
 
 void pumpOn(pump *pmp){
 	pmp->finished = 0;
@@ -53,7 +53,7 @@ void parallelDispense(request* req){
 	while(mstime < (totalDuration + DELTA)){
 		for(uint8_t i = 0; i < req->parPumps; i++){
 			//println("in this loop");
-			if((mstime - initialTime) > (unsigned int)((req->pumps[i].amount)*1000) ){
+			if((mstime - initialTime) >= (unsigned int)((req->pumps[i].amount)*1000) ){
 				if(req->pumps[i].finished == 0){
 					pumpOff(&(req->pumps[i]));
 				}
