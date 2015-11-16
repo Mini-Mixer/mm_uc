@@ -5,6 +5,7 @@
 #define NULL 0
 #define MODEDELAY 1000
 #define MAXPUMPS 6
+#define A2DRATIO 1;
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -17,12 +18,28 @@
 void init(void){
 	UART_Init(MYUBRR);
 	timer0_Init();
-	TCCR2A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
+	
+	// All PWM generators are set to not output on initial setup
+	DDRD &= ~(1<<PD3); // A
+	DDRD &= ~(1<<PD5); // B
+	DDRD &= ~(1<<PD6); // C
+	DDRB &= ~(1<<PB1); // D
+	DDRB &= ~(1<<PB2); // E
+	DDRB &= ~(1<<PB3); // F
+	
+	TCCR0A |= _BV(COM0A0);
+	TCCR0B |= (1 << WGM02);
+	TCCR2A = _BV(COM2A1) | _BV(COM2B1) |  _BV(WGM21) | _BV(WGM20);
 	TCCR2B = _BV(CS22);
-	OCR2B = 255; 
-	OCR2A = 255; 
-	DDRD |= 1<<PD3; // OC2B
-	DDRD |= 1<<PB3; // OC2B
+	
+	
+	OCR0A = 100;
+	OCR0B = 100;	
+	OCR1A = 100;
+	OCR1B = 100;
+	OCR2A = 100; 
+	OCR2B = 100; 
+
 }
 
 request* processRequest(){
@@ -94,6 +111,11 @@ request* processRequest(){
 				return NULL;
 		}
 	}
+	
+	for(uint8_t index = 0; index < j; index++){
+		pumps[index].duration = pumps[index].amount * A2DRATIO;
+	}
+	
 	UART_TString("OK");
 	
 	/* Create and return the request */
@@ -120,6 +142,7 @@ int main(void){
 	request* req;
 	/* Primary loop */
 	while(1){	
+		req = NULL;
 		println("Ready.");
 		unsigned char temp = UART_Receive();
 		if(temp == 'R'){
