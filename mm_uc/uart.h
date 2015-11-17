@@ -2,6 +2,11 @@ void UART_Transmit(unsigned char);
 unsigned char UART_Receive(void);
 void UART_Flush(void);
 
+
+/* 
+	UART_TString(char*)
+	Transmits a string via UART
+*/
 void UART_TString(char* string){
 	uint8_t index = 0;
 	while(string[index]){
@@ -10,11 +15,20 @@ void UART_TString(char* string){
 	}
 }
 
+/* 
+	CRLF(void)
+	Used for newlines (Carriage Return/Line Feed, reduces code 
+*/
 void CRLF(){
 	UART_Transmit(0x0D);
 	UART_Transmit(0x0A);
 }
 
+/* 
+	println(char*)
+	Utilizes both CRLF and UART_TString to transmit a string with a newline
+	autmatically following after
+*/
 void println(char* string){
 	UART_TString(string);
 	CRLF();

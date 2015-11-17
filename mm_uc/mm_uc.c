@@ -1,11 +1,11 @@
-#define F_CPU 16000000UL
+#define F_CPU 16000000UL //16MHz
 #define FOSC 16000000 // Clock Speed
-#define BAUD 9600
+#define BAUD 9600 // Serial Baud Rate
 #define MYUBRR FOSC/16/(BAUD-1)
-#define NULL 0
+#define NULL 0 
 #define MODEDELAY 1000
-#define MAXPUMPS 6
-#define A2DRATIO 1;
+#define MAXPUMPS 6 // Mini-Mixer only supports 6 pumps
+#define A2DRATIO 1 // Conversion factor between amount and duration
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -27,12 +27,13 @@ void init(void){
 	DDRB &= ~(1<<PB2); // E
 	DDRB &= ~(1<<PB3); // F
 	
+	// Configure timer registers
 	TCCR0A |= _BV(COM0A0);
 	TCCR0B |= (1 << WGM02);
 	TCCR2A = _BV(COM2A1) | _BV(COM2B1) |  _BV(WGM21) | _BV(WGM20);
 	TCCR2B = _BV(CS22);
 	
-	
+	// Set the counter limit
 	OCR0A = 100;
 	OCR0B = 100;	
 	OCR1A = 100;
@@ -141,7 +142,8 @@ int main(void){
 	init();
 	request* req;
 	/* Primary loop */
-	while(1){	
+	// Infinite loop is justified in this instance
+	for(;;){	
 		req = NULL;
 		println("Ready.");
 		unsigned char temp = UART_Receive();
@@ -166,7 +168,7 @@ int main(void){
 			println("Invalid request command");
 			
 	}
-	return 0;
+	return 0; // Should never reach this point
 }
 
 

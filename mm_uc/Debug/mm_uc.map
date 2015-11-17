@@ -635,9 +635,9 @@ END GROUP
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x286 mm_uc.o
 
-.debug_line     0x00000000      0x405
+.debug_line     0x00000000      0x409
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x405 mm_uc.o
+ .debug_line    0x00000000      0x409 mm_uc.o
 
 .debug_frame    0x00000000      0x278
  *(.debug_frame)

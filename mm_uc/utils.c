@@ -106,16 +106,3 @@ void sequentialDispense(request* req){
 		pumpOff(&(req->pumps[i]));
 	}	
 }
-
-/* if(temp > 47 && temp < 58){
-UART_Transmit(temp);
-CRLF();
-temp = temp - 48;
-unsigned int duration = mstime + 1000*temp;
-//for(; OCR2B >= 100; OCR2B-=10){ _delay_ms(1); }
-while(mstime < duration){
-}
-//for(; OCR2B <= 255; OCR2B++){ _delay_ms(1); }
-
-}
-*/

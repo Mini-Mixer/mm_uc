@@ -17,15 +17,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   6 .debug_abbrev 00000286  00000000  00000000  00001aa9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000405  00000000  00000000  00001d2f  2**0
+  7 .debug_line   00000409  00000000  00000000  00001d2f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000278  00000000  00000000  00002134  2**2
+  8 .debug_frame  00000278  00000000  00000000  00002138  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000002b8  00000000  00000000  000023ac  2**0
+  9 .debug_str    000002b8  00000000  00000000  000023b0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000009a2  00000000  00000000  00002664  2**0
+ 10 .debug_loc    000009a2  00000000  00000000  00002668  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000118  00000000  00000000  00003006  2**0
+ 11 .debug_ranges 00000118  00000000  00000000  0000300a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -138,10 +138,11 @@ void UART_Transmit( unsigned char data )
   ca:	08 95       	ret
 
 000000cc <UART_TString>:
-void UART_Transmit(unsigned char);
-unsigned char UART_Receive(void);
-void UART_Flush(void);
 
+/* 
+	UART_TString(char*)
+	Transmits a string via UART
+*/
 void UART_TString(char* string){
   cc:	1f 93       	push	r17
   ce:	cf 93       	push	r28
@@ -152,10 +153,10 @@ void UART_TString(char* string){
   d4:	88 81       	ld	r24, Y
   d6:	88 23       	and	r24, r24
   d8:	51 f0       	breq	.+20     	; 0xee <UART_TString+0x22>
-void UART_Transmit(unsigned char);
-unsigned char UART_Receive(void);
-void UART_Flush(void);
-
+/* 
+	UART_TString(char*)
+	Transmits a string via UART
+*/
 void UART_TString(char* string){
 	uint8_t index = 0;
   da:	10 e0       	ldi	r17, 0x00	; 0
@@ -164,9 +165,9 @@ void UART_TString(char* string){
   dc:	0e 94 5e 00 	call	0xbc	; 0xbc <UART_Transmit>
 		index++;
   e0:	1f 5f       	subi	r17, 0xFF	; 255
-unsigned char UART_Receive(void);
-void UART_Flush(void);
-
+	UART_TString(char*)
+	Transmits a string via UART
+*/
 void UART_TString(char* string){
 	uint8_t index = 0;
 	while(string[index]){
@@ -186,7 +187,10 @@ void UART_TString(char* string){
   f4:	08 95       	ret
 
 000000f6 <CRLF>:
-
+/* 
+	CRLF(void)
+	Used for newlines (Carriage Return/Line Feed, reduces code 
+*/
 void CRLF(){
 	UART_Transmit(0x0D);
   f6:	8d e0       	ldi	r24, 0x0D	; 13
@@ -197,8 +201,10 @@ void CRLF(){
  102:	08 95       	ret
 
 00000104 <println>:
-}
-
+	println(char*)
+	Utilizes both CRLF and UART_TString to transmit a string with a newline
+	autmatically following after
+*/
 void println(char* string){
 	UART_TString(string);
  104:	0e 94 66 00 	call	0xcc	; 0xcc <UART_TString>
@@ -569,7 +575,6 @@ void parallelDispense(request* req){
 	
 	while(mstime < (totalDuration + DELTA)){
 		for(uint8_t i = 0; i < req->parPumps; i++){
-			//println("in this loop");
 			if((mstime - initialTime) >= (float)((req->pumps[i].duration)*1000) ){
  302:	60 91 b6 01 	lds	r22, 0x01B6
  306:	70 91 b7 01 	lds	r23, 0x01B7
@@ -938,6 +943,7 @@ void init(void){
 	DDRB &= ~(1<<PB3); // F
  594:	23 98       	cbi	0x04, 3	; 4
 	
+	// Configure timer registers
 	TCCR0A |= _BV(COM0A0);
  596:	84 b5       	in	r24, 0x24	; 36
  598:	80 64       	ori	r24, 0x40	; 64
@@ -953,7 +959,7 @@ void init(void){
  5a8:	84 e0       	ldi	r24, 0x04	; 4
  5aa:	80 93 b1 00 	sts	0x00B1, r24
 	
-	
+	// Set the counter limit
 	OCR0A = 100;
  5ae:	24 e6       	ldi	r18, 0x64	; 100
  5b0:	27 bd       	out	0x27, r18	; 39
@@ -1500,7 +1506,8 @@ int main(void){
  8b4:	0e 94 bf 02 	call	0x57e	; 0x57e <init>
 	request* req;
 	/* Primary loop */
-	while(1){	
+	// Infinite loop is justified in this instance
+	for(;;){	
 		req = NULL;
 		println("Ready.");
  8b8:	82 e6       	ldi	r24, 0x62	; 98
