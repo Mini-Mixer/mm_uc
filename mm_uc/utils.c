@@ -100,9 +100,11 @@ void sequentialDispense(request* req){
 	
 	uint8_t totalPumps = req->parPumps + req->seqPumps;
 	for(uint8_t i = req->parPumps; i < totalPumps; i++){
-		unsigned int totalDuration = mstime + (unsigned int)((req->pumps[i].duration)*1000);
+		float totalDuration = mstime + (float)((req->pumps[i].duration)*1000);
 		pumpOn(&(req->pumps[i]));
-		while(mstime < totalDuration){ }
+		while(mstime < totalDuration){ 
+			/* Something can be ran here if necessary */ 
+		}
 		pumpOff(&(req->pumps[i]));
 	}	
 }

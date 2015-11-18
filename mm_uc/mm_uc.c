@@ -28,8 +28,17 @@ void init(void){
 	DDRB &= ~(1<<PB3); // F
 	
 	// Configure timer registers
+	// Timer 0	
 	TCCR0A |= _BV(COM0A0);
 	TCCR0B |= (1 << WGM02);
+	
+	//Timer 1
+	/*
+	TCCR1A = (1<<COM1A0) | (1<<COM1A1) | (1<<WGM11) | (1<<WGM10);
+	TCCR1B = (1<<WGM13) | (1<<WGM12);
+	*/
+	
+	//Timer 2
 	TCCR2A = _BV(COM2A1) | _BV(COM2B1) |  _BV(WGM21) | _BV(WGM20);
 	TCCR2B = _BV(CS22);
 	
@@ -115,6 +124,7 @@ request* processRequest(){
 	
 	for(uint8_t index = 0; index < j; index++){
 		pumps[index].duration = pumps[index].amount * A2DRATIO;
+		//pumps[index].finished = 0; //
 	}
 	
 	UART_TString("OK");
@@ -166,6 +176,9 @@ int main(void){
 		}
 		else
 			println("Invalid request command");
+		
+		free(req->pumps); 
+		free(req);
 			
 	}
 	return 0; // Should never reach this point

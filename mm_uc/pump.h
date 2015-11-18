@@ -3,7 +3,7 @@
 typedef struct _pump {
 	unsigned char label;
 	float amount;
-	unsigned long duration;
+	float duration;
 	uint8_t finished;
 } pump;
 
