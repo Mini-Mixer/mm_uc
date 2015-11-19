@@ -17,7 +17,7 @@ void UART_TString(char* string){
 
 /* 
 	CRLF(void)
-	Used for newlines (Carriage Return/Line Feed, reduces code 
+	Used for newlines (Carriage Return/Line Feed, reduces code)
 */
 void CRLF(){
 	UART_Transmit(0x0D);
@@ -27,7 +27,7 @@ void CRLF(){
 /* 
 	println(char*)
 	Utilizes both CRLF and UART_TString to transmit a string with a newline
-	autmatically following after
+	automatically following after
 */
 void println(char* string){
 	UART_TString(string);
