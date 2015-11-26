@@ -5,7 +5,7 @@
 #define NULL 0 
 #define MODEDELAY 1000
 #define MAXPUMPS 6 // Mini-Mixer only supports 6 pumps
-#define A2DRATIO 1 // Conversion factor between amount and duration
+#define A2DRATIO 5.9 // Conversion factor between amount and duration
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -20,7 +20,7 @@ void init(void){
 	timer_init();
 
 	// Set the counter limit
-	OCR2B = 150; //A 
+	OCR2B = 200; //A 
 	OCR0B = 100; //B
 	OCR0A = 100; //C	
 	OCR1A = 150; //D

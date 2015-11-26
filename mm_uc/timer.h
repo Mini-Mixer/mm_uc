@@ -6,12 +6,13 @@ volatile float mstime;
 */
 
 ISR (TIMER0_COMPA_vect){
-	mstime+=1.6; 
+	mstime+=3.8; 
 }
 
 
 void timer0_Init(void){
     TCCR0A |= (1 << WGM01);
+	TCCR0A |= (1 << WGM00);
     TIMSK0 |= (1 << OCIE0A);
     sei();         
     TCCR0B |= (1 << CS02);  
@@ -32,7 +33,10 @@ void timer_init(void){
 	// Configure timer registers
 	// Timer 0
 	TCCR0A |= (1 << COM0A0);
-	TCCR0B |= (1 << WGM02);
+	TCCR0A |= (1 << COM0A1);
+	TCCR0A |= (1 << COM0B0);
+	TCCR0A |= (1 << COM0B1);
+	//TCCR0B |= (1 << WGM02);
 	
 	// Timer 1
 	
