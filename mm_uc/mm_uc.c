@@ -21,12 +21,14 @@ void init(void){
 
 	// Set the counter limit
 	OCR2B = 200; //A 
-	OCR0B = 100; //B
-	OCR0A = 100; //C	
-	OCR1A = 150; //D
-	OCR1B = 150; //E
-	OCR2A = 150; //F
+	OCR0B = 200; //B
+	OCR0A = 200; //C	
+	OCR1A = 200; //D
+	OCR1B = 200; //E
+	OCR2A = 200; //F
 
+	// Turn on LED on pin 19 (PB5)
+	DDRB |= 1<<PB5;
 
 }
 
