@@ -6,7 +6,7 @@ volatile float mstime;
 */
 
 ISR (TIMER0_COMPA_vect){
-	mstime+=3.8; 
+	mstime+=4.2; 
 }
 
 

@@ -152,7 +152,7 @@ int main(void){
 				sequentialDispense(req);
 				_delay_ms(MODEDELAY); // Delay between modes, will tweak
 			}
-			println("Request completed");			
+			println("Reque$t completed"); // Dollar symbol used as sentinel value for embedded server
 		}
 		else
 			println("Invalid request command");

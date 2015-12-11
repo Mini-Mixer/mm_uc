@@ -255,14 +255,14 @@ ISR (TIMER0_COMPA_vect){
  13a:	bf 93       	push	r27
  13c:	ef 93       	push	r30
  13e:	ff 93       	push	r31
-	mstime+=3.8; 
+	mstime+=4.2; 
  140:	60 91 b6 01 	lds	r22, 0x01B6
  144:	70 91 b7 01 	lds	r23, 0x01B7
  148:	80 91 b8 01 	lds	r24, 0x01B8
  14c:	90 91 b9 01 	lds	r25, 0x01B9
- 150:	23 e3       	ldi	r18, 0x33	; 51
- 152:	33 e3       	ldi	r19, 0x33	; 51
- 154:	43 e7       	ldi	r20, 0x73	; 115
+ 150:	26 e6       	ldi	r18, 0x66	; 102
+ 152:	36 e6       	ldi	r19, 0x66	; 102
+ 154:	46 e8       	ldi	r20, 0x86	; 134
  156:	50 e4       	ldi	r21, 0x40	; 64
  158:	0e 94 cc 04 	call	0x998	; 0x998 <__addsf3>
  15c:	60 93 b6 01 	sts	0x01B6, r22
@@ -473,33 +473,33 @@ void pumpOn(pump *pmp){
  272:	59 f0       	breq	.+22     	; 0x28a <pumpOn+0x48>
  274:	0b c0       	rjmp	.+22     	; 0x28c <pumpOn+0x4a>
 		case 'A':
-			DDRD |= 1<<PD3;
- 276:	53 9a       	sbi	0x0a, 3	; 10
+			DDRB |= 1<<PB3;
+ 276:	23 9a       	sbi	0x04, 3	; 4
 			break;
  278:	09 c0       	rjmp	.+18     	; 0x28c <pumpOn+0x4a>
 		case 'B':
-			DDRD |= 1<<PD5;
- 27a:	55 9a       	sbi	0x0a, 5	; 10
+			DDRB |= 1<<PB2;
+ 27a:	22 9a       	sbi	0x04, 2	; 4
 			break;
  27c:	07 c0       	rjmp	.+14     	; 0x28c <pumpOn+0x4a>
 		case 'C':
-			DDRD |= 1<<PD6;
- 27e:	56 9a       	sbi	0x0a, 6	; 10
+			DDRB |= 1<<PB1;
+ 27e:	21 9a       	sbi	0x04, 1	; 4
 			break;
  280:	05 c0       	rjmp	.+10     	; 0x28c <pumpOn+0x4a>
 		case 'D':
-			DDRB |= 1<<PB1;
- 282:	21 9a       	sbi	0x04, 1	; 4
+			DDRD |= 1<<PD3;
+ 282:	53 9a       	sbi	0x0a, 3	; 10
 			break;
  284:	03 c0       	rjmp	.+6      	; 0x28c <pumpOn+0x4a>
 		case 'E':
-			DDRB |= 1<<PB2;
- 286:	22 9a       	sbi	0x04, 2	; 4
+			DDRD |= 1<<PD5;
+ 286:	55 9a       	sbi	0x0a, 5	; 10
 			break;
  288:	01 c0       	rjmp	.+2      	; 0x28c <pumpOn+0x4a>
 		case 'F':
-			DDRB |= 1<<PB3;
- 28a:	23 9a       	sbi	0x04, 3	; 4
+			DDRD |= 1<<PD6;
+ 28a:	56 9a       	sbi	0x0a, 6	; 10
 			break;
 		default:
 			break;
@@ -544,33 +544,33 @@ void pumpOff(pump *pmp){
  2c8:	59 f0       	breq	.+22     	; 0x2e0 <pumpOff+0x4a>
  2ca:	0b c0       	rjmp	.+22     	; 0x2e2 <pumpOff+0x4c>
 		case 'A':
-			DDRD &= ~(1<<PD3);
- 2cc:	53 98       	cbi	0x0a, 3	; 10
+			DDRB &= ~(1<<PB3);
+ 2cc:	23 98       	cbi	0x04, 3	; 4
 			break;
  2ce:	09 c0       	rjmp	.+18     	; 0x2e2 <pumpOff+0x4c>
 		case 'B':
-			DDRD &= ~(1<<PD5);
- 2d0:	55 98       	cbi	0x0a, 5	; 10
+			DDRB &= ~(1<<PB2);
+ 2d0:	22 98       	cbi	0x04, 2	; 4
 			break;
  2d2:	07 c0       	rjmp	.+14     	; 0x2e2 <pumpOff+0x4c>
 		case 'C':
-			DDRD &= ~(1<<PD6); 
- 2d4:	56 98       	cbi	0x0a, 6	; 10
+			DDRB &= ~(1<<PB1); 
+ 2d4:	21 98       	cbi	0x04, 1	; 4
 			break;
  2d6:	05 c0       	rjmp	.+10     	; 0x2e2 <pumpOff+0x4c>
 		case 'D':
-			DDRB &= ~(1<<PB1);
- 2d8:	21 98       	cbi	0x04, 1	; 4
+			DDRD &= ~(1<<PD3);
+ 2d8:	53 98       	cbi	0x0a, 3	; 10
 			break;
  2da:	03 c0       	rjmp	.+6      	; 0x2e2 <pumpOff+0x4c>
 		case 'E':
-			DDRB &= ~(1<<PB2);
- 2dc:	22 98       	cbi	0x04, 2	; 4
+			DDRD &= ~(1<<PD5);
+ 2dc:	55 98       	cbi	0x0a, 5	; 10
 			break;
  2de:	01 c0       	rjmp	.+2      	; 0x2e2 <pumpOff+0x4c>
 		case 'F':
-			DDRB &= ~(1<<PB3);
- 2e0:	23 98       	cbi	0x04, 3	; 4
+			DDRD &= ~(1<<PD6);
+ 2e0:	56 98       	cbi	0x0a, 6	; 10
 			break;
 		default:
 			break;
@@ -1667,7 +1667,7 @@ int main(void){
  96e:	00 00       	nop
 				_delay_ms(MODEDELAY); // Delay between modes, will tweak
 			}
-			println("Request completed");			
+			println("Reque$t completed"); // Dollar symbol used as sentinel value for embedded server
  970:	8b e8       	ldi	r24, 0x8B	; 139
  972:	91 e0       	ldi	r25, 0x01	; 1
  974:	0e 94 82 00 	call	0x104	; 0x104 <println>
@@ -1686,7 +1686,7 @@ int main(void){
 		req = NULL;
  982:	c0 2f       	mov	r28, r16
  984:	d1 2f       	mov	r29, r17
-			println("Request completed");			
+			println("Reque$t completed"); // Dollar symbol used as sentinel value for embedded server
 		}
 		else
 			println("Invalid request command");

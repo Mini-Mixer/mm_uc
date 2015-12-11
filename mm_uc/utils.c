@@ -6,22 +6,22 @@ void pumpOn(pump *pmp){
 	UART_TString(" is on!");
 	switch(pmp->label){
 		case 'A':
-			DDRD |= 1<<PD3;
+			DDRB |= 1<<PB3;
 			break;
 		case 'B':
-			DDRD |= 1<<PD5;
-			break;
-		case 'C':
-			DDRD |= 1<<PD6;
-			break;
-		case 'D':
-			DDRB |= 1<<PB1;
-			break;
-		case 'E':
 			DDRB |= 1<<PB2;
 			break;
+		case 'C':
+			DDRB |= 1<<PB1;
+			break;
+		case 'D':
+			DDRD |= 1<<PD3;
+			break;
+		case 'E':
+			DDRD |= 1<<PD5;
+			break;
 		case 'F':
-			DDRB |= 1<<PB3;
+			DDRD |= 1<<PD6;
 			break;
 		default:
 			break;
@@ -35,22 +35,22 @@ void pumpOff(pump *pmp){
 	UART_TString(" is off!");
 	switch(pmp->label){
 		case 'A':
-			DDRD &= ~(1<<PD3);
+			DDRB &= ~(1<<PB3);
 			break;
 		case 'B':
-			DDRD &= ~(1<<PD5);
-			break;
-		case 'C':
-			DDRD &= ~(1<<PD6); 
-			break;
-		case 'D':
-			DDRB &= ~(1<<PB1);
-			break;
-		case 'E':
 			DDRB &= ~(1<<PB2);
 			break;
+		case 'C':
+			DDRB &= ~(1<<PB1); 
+			break;
+		case 'D':
+			DDRD &= ~(1<<PD3);
+			break;
+		case 'E':
+			DDRD &= ~(1<<PD5);
+			break;
 		case 'F':
-			DDRB &= ~(1<<PB3);
+			DDRD &= ~(1<<PD6);
 			break;
 		default:
 			break;
